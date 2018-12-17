@@ -1,0 +1,33 @@
+{
+  "title": "Unit 1",
+  "topics": [
+    {
+      "title": "Vocabulary",
+      "subTitle": "everyday actions",
+      "exercises": [
+        {
+          "title": "Use the phrases above to complete the sentences.",
+          "sentences": [
+            [{"text": "You can"}, {"text":  "", "isBlank":  true}, {"text": "while you are waiting for the dentist."}],
+            [{"text": "I always"}, {"text":  "", "isBlank":  true}, {"text": "when I get up in the morning."}],
+            [{"text": "I"}, {"text":  "", "isBlank":  true}, {"text": "with my sister every day."}]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Grammar",
+      "subTitle": "likes and dislikes",
+      "exercises": [
+        {
+          "title": "Complete the texts with words from the boxes.",
+          "options": ["love", "like", "stand", "keen", "hate"],
+          "sentences": [
+            [{"text":  "I can't"}, {"isBlank": true}, {"text":  "doing nothing."} ],
+            [{"text":  "I really"}, {"isBlank": true}, {"text":  "holidays whre people lie on the beach all day."} ]
+          ]
+        }
+      ]
+    }
+  ]
+}
