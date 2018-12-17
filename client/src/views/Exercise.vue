@@ -11,6 +11,9 @@
             <div class="clearfix"></div>
             <b-card :sub-title="exercise.title" v-for="exercise in topic.exercises" class="md-12"
                     style="margin: 4px 0">
+                <ul class="options">
+                    <li v-for="option in exercise.options">{{option}}</li>
+                </ul>
                 <ol>
                     <li v-for="sentence in exercise.sentences">
                         <span v-for="word in sentence">
@@ -24,6 +27,11 @@
                 </ol>
             </b-card>
         </b-card>
+        <div class="float-right btn-group">
+            <button class="btn btn-warning">Reset</button>
+            <button class="btn btn-danger">Commit</button>
+        </div>
+        <div class="clearfix"></div>
     </article>
 </template>
 
@@ -71,5 +79,22 @@
 
     .topic .card-subtitle {
         margin-left: 4px;
+    }
+
+    input[type="text"] {
+        padding: 0 4px;
+    }
+
+    .options {
+        padding-left: 4px;
+    }
+
+    .options li {
+        display: inline;
+        margin-right: 10px;
+        background-color: rgb(248, 248, 248);
+        border-radius: 4px;
+        padding: 4px;
+        border: 1px solid rgb(166, 166, 166);;
     }
 </style>
