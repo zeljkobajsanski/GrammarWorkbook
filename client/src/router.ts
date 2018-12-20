@@ -20,6 +20,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {path: '/exercise/:id', name: 'exercise', component: () => import('./views/Exercise.vue')},
-      {path: '/', redirect: '/exercise/1'}
+    {path: '/topic/:id/edit', name: 'topic-edit', component: () => import('./views/TopicEdit.vue')},
+    {path: '/', redirect: '/exercise/1'},
   ]
 })
