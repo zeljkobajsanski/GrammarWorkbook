@@ -48,8 +48,7 @@
 
 <style>
   #page {
-    width: 100%;
-    margin: 10px auto;
+    margin: 10px 0 0 0;
     border: 1px solid #ced4da;
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);

@@ -5,10 +5,12 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueDragDrop from 'vue-drag-drop';
 
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
+Vue.use(VueDragDrop);
 
 
 new Vue({

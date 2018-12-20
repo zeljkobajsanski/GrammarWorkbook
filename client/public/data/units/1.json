@@ -7,11 +7,18 @@
       "exercises": [
         {
           "title": "Use the phrases above to complete the sentences.",
+          "type": "fill",
           "sentences": [
             [{"text": "You can"}, {"text":  "", "isBlank":  true}, {"text": "while you are waiting for the dentist."}],
             [{"text": "I always"}, {"text":  "", "isBlank":  true}, {"text": "when I get up in the morning."}],
             [{"text": "I"}, {"text":  "", "isBlank":  true}, {"text": "with my sister every day."}]
           ]
+        },
+        {
+          "title": "Match the words",
+          "type": "match",
+          "left": [{"id": "eca2c597-6af1-4381-943c-4edff333f916", "text": "Foo"}],
+          "right": [{"id": "7397a5c4-926d-45cd-a4e1-71b3a59fe6af", "text": "Bar"}]
         }
       ]
     },
@@ -21,10 +28,29 @@
       "exercises": [
         {
           "title": "Complete the texts with words from the boxes.",
+          "type": "fill",
           "options": ["love", "like", "stand", "keen", "hate"],
           "sentences": [
             [{"text":  "I can't"}, {"isBlank": true}, {"text":  "doing nothing."} ],
             [{"text":  "I really"}, {"isBlank": true}, {"text":  "holidays whre people lie on the beach all day."} ]
+          ]
+        },
+        {
+          "title": "Complete the dialogue",
+          "type": "dialogue",
+          "dialogs": [
+            {
+              "dialog": [
+                {"sentences": [{"text": "A: Wo ist denn Manuella?"}], "options": []},
+                {"sentences": [{"text": "B: Ich"}, {"isBlank": true}], "options": ["weiss", "wissen"]},
+                {"sentences": [{"text": "C: Sie ist"}, {"isBlank": true}, {"text": "Kino, glaube ich"}], "options": ["im", "in das", "neben dem"]}
+              ]},
+            {"dialog": [
+                {"sentences": [{"text": "A: Ich suche meinem Kugelschreiber. "}, {"isBlank": true}, {"text": "er"}, {"text": "dem Tisch?"}], "options": ["Legt", "Liegt"]},
+                {"sentences": [{"text": "B: Ja, das ist er."}, "options"], "options": ["weiss", "wissen"]},
+                {"sentences": [{"text": "A: Prima!"}], "options": []}
+              ]
+            }
           ]
         }
       ]
