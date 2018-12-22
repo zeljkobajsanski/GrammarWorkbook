@@ -40,10 +40,10 @@
                     <div class="form-group row">
                         <label class="col-2 col-form-label">Options</label>
                         <div class="col-10">
-                            <span v-for="o in exercise.options" class="option">
-                                {{o}} <i class="fa fa-times text-muted pointer" @click="removeOption(exercise, o)"></i>
-                            </span>
-                            <button class="btn btn-sm btn-primary" type="button" title="Add new option"><i class="fa fa-plus"></i></button>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="useOptions">
+                                <label class="custom-control-label" for="useOptions">Use options</label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -86,18 +86,10 @@
 
         addExercise() {
             const exercise = {
-                options: ['Foo', 'Bar'],
                 sentences: []
             };
 
             this.topic.exercises.push(exercise);
-        }
-
-        removeOption(exercise, option) {
-            const ix = exercise.options.indexOf(option);
-            if (ix > -1) {
-                exercise.options.splice(ix, 1);
-            }
         }
 
         removeSentence(exercise, sentence) {
