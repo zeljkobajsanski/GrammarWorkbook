@@ -6,26 +6,23 @@
                     <input type="text" v-model="topic.title" placeholder="Title" class="form-control">
                 </div>
                 <div class="col-4">
-                    <input type="text" v-model="topic.subtitle" placeholder="Subtitle" class="form-control">
+                    <input type="text" v-model="topic.subTitle" placeholder="Subtitle" class="form-control">
                 </div>
                 <div class="col-4">
-                    <button class="btn btn-danger">Confirm</button>
+                    <button class="btn btn-danger" @click="saveTopic" :disabled="!topic.title">Confirm</button>
                 </div>
             </div>
-            <p style="margin-top: 10px">
-                Exercises
-                <button class="btn btn-xs btn-primary" @click="addExercise" title="Add exercise">
-                    <i class="fa fa-plus"></i>
-                </button>
+            <p style="margin-top: 10px" v-if="topic.id">
+                Exercises <i class="fa fa-plus-circle text-primary pointer" @click="addExercise" title="Add exercise"></i>
             </p>
-            <b-card v-for="(exercise, ix) in topic.exercises" style="margin-bottom: 5px">
-                <i class="fa fa-times-rectangle-o pull-right pointer" title="Remove" @click="removeExerciseAt(ix)"></i>
+            <b-card v-for="(exercise, ix) in topic.exercises" :key="ix" style="margin-bottom: 5px">
+                <i class="fa fa-times-rectangle-o pull-right pointer" title="Remove" @click="removeExercise(exercise)"></i>
                 <div class="clearfix" style="margin-bottom: 10px"></div>
                 <form>
                     <div class="form-group row">
                         <label class="col-2 col-form-label">Type</label>
                         <div class="col-10">
-                            <select class="form-control">
+                            <select class="form-control" v-model="exercise.type">
                                 <option value="fill">Fill the blanks</option>
                                 <option value="dialogue">Dialog</option>
                             </select>
@@ -34,35 +31,41 @@
                     <div class="form-group row">
                         <label class="col-2 col-form-label">Title</label>
                         <div class="col-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" v-model="exercise.title">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label">Options</label>
                         <div class="col-10">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="useOptions">
-                                <label class="custom-control-label" for="useOptions">Use options</label>
+                                <input type="checkbox" class="custom-control-input" :id="'useOptions' + ix" v-model="exercise.useOptions">
+                                <label class="custom-control-label" :for="'useOptions' + ix">Use options</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label"></label>
                         <div class="col-10">
-                            <button class="btn btn-primary" @click="exercise.sentences.push({})">Add sentence</button>
+                            <button class="btn btn-primary" type="button" @click="exercise.sentences.push({})">Add sentence</button>
                         </div>
                     </div>
-                    <div class="form-group row" v-for="sentence in exercise.sentences">
+                    <div class="form-group row" v-for="(sentence, sentenceIndex) in exercise.sentences">
                         <label class="col-2 col-form-label">Sentence</label>
-                        <div class="col-8">
-                            <input class="form-control">
+                        <div class="col-7">
+                            <input class="form-control" v-model="sentence.text">
+                        </div>
+                        <div class="col-2">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" :id="`useFullWidth_${ix}_${sentenceIndex}`" v-model="sentence.isFullWidth">
+                                <label class="custom-control-label" :for="`useFullWidth_${ix}_${sentenceIndex}`">Full width</label>
+                            </div>
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-sm btn-danger" @click="removeSentence(exercise, sentence)">Remove</button>
                         </div>
                     </div>
                     <hr>
-                    <button class="btn btn-warning pull-right" type="button">Save</button>
+                    <button class="btn btn-warning pull-right" type="button" @click="saveExercise(exercise)">Save</button>
                 </form>
             </b-card>
         </b-card>
@@ -72,20 +75,71 @@
 <script lang="ts">
     import Vue from 'vue'
     import {Component, Prop, Watch} from "vue-property-decorator";
+    import RestClient from '../services/RestClient'
     import * as _ from 'lodash'
 
     @Component({})
     export default class TopicEdit extends Vue {
+        unitId: string;
+
         topic = {
+            unitId: '',
+            id: '',
+            title: '',
+            subtitle: '',
             exercises: [],
         };
 
-        removeExerciseAt(index) {
-            this.topic.exercises.splice(index, 1);
+        async created() {
+            this.unitId = this.$route.params['unitId'];
+            this.topic.unitId = this.unitId;
+            this.topic.id = this.$route.params['id'];
+            if (this.topic.id) {
+                const {data} = await RestClient.getTopic(this.topic.id);
+                this.topic = data;
+            }
+        }
+
+        async saveTopic() {
+            try {
+                const {data} = await RestClient.saveTopic(this.topic);
+                this.$toasted.success('Topic has been saved', {icon: 'check'});
+                this.topic.id = data.id;
+            } catch (err) {
+                this.$toasted.error('Failed to save topic');
+            }
+        }
+
+        async saveExercise(exercise) {
+            try {
+                const {data} = RestClient.saveExercise(exercise);
+                const ix = this.topic.exercises.indexOf(exercise);
+                this.topic[ix] = data;
+                this.$toasted.success('Exercise has been saved', {icon: 'check'});
+            } catch (err) {
+                this.$toasted.error('Failed to save exercise');
+            }
+        }
+
+        async removeExercise(exercise) {
+            try {
+                if (exercise.id) {
+                    await RestClient.removeExercise(exercise.id);
+                }
+                const ix = this.topic.exercises.indexOf(exercise);
+                this.topic.exercises.splice(ix, 1);
+            } catch (err) {
+                this.$toasted.error('Failed to remove exercise');
+            }
+
         }
 
         addExercise() {
             const exercise = {
+                type: 'fill',
+                title: '',
+                topicId: this.topic.id,
+                useOptions: false,
                 sentences: []
             };
 

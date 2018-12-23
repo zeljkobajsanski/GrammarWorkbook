@@ -8,16 +8,15 @@ namespace GrammarWorkbook.Data.Models
         public string Title { get; set; }
         public Topic Topic { get; set; }
         public Guid TopicId { get; set; }
+        public bool UseOptions { get; set; }
     }
 
     public class FillTheBlanksExercise : Exercise
     {
-        public ICollection<Option> Options { get; private set; }
         public ICollection<Sentence> Sentences { get; private set; }
 
         public FillTheBlanksExercise()
         {
-            Options = new HashSet<Option>();
             Sentences = new List<Sentence>();
         }
     }

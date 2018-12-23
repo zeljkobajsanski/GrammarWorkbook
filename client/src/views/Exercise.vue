@@ -18,19 +18,20 @@
                     </ul>
                     <ol>
                         <li v-for="sentence in exercise.sentences">
-                        <span v-for="word in sentence">
-                            <span v-if="!word.isBlank" class="token">{{word.text}}</span>
-                            <input v-if="word.isBlank && !exercise.options" type="text" class="token"
-                                   :class="{'wide-textbox': word.isFullSentence, 'short-textbox': !word.isFullSentence}"
-                                   v-model="word.text">
-                            <select v-if="word.isBlank && exercise.options" v-model="word.text">
-                                <option v-for="option in exercise.options" :value="option">{{option}}</option>
-                            </select>
-                        </span>
+                            <span v-for="word in sentence.words">
+                                <span v-if="!word.isBlank" class="token">{{word.text}}</span>
+                                <input v-if="word.isBlank && !exercise.options.length" type="text" class="token"
+                                       :class="{'wide-textbox': word.isFullSentence, 'short-textbox': !word.isFullSentence}"
+                                       v-model="word.text">
+                                <select v-if="word.isBlank && exercise.options.length" v-model="word.text">
+                                    <option v-for="option in exercise.options" :value="option">{{option}}</option>
+                                </select>
+                            </span>
+                            <p v-if="!sentence.isCorrect" class="text-danger correctText">{{sentence.correctText}}</p>
                         </li>
                     </ol>
                 </div>
-                <div v-if="exercise.type === 'match'" id="matcher">
+               <!-- <div v-if="exercise.type === 'match'" id="matcher">
                     <p class="text-muted" style="font-size: 12px; margin-left: 4px">
                         Drag and drop words from the right panel to the middle and vice versa
                     </p>
@@ -62,8 +63,8 @@
                             </drop>
                         </div>
                     </div>
-                </div>
-                <div v-if="exercise.type === 'dialogue'">
+                </div>-->
+                <!--<div v-if="exercise.type === 'dialogue'">
                     <ol>
                         <li v-for="d in exercise.dialogs">
                             <ul>
@@ -81,12 +82,12 @@
                             </ul>
                         </li>
                     </ol>
-                </div>
+                </div>-->
             </b-card>
         </b-card>
         <div class="float-right btn-group">
-            <button class="btn btn-warning">Reset</button>
-            <button class="btn btn-danger">Commit</button>
+            <button class="btn btn-warning" @click="reset">Reset</button>
+            <button class="btn btn-danger" @click="checkResults">Commit</button>
         </div>
         <div class="clearfix"></div>
     </article>
@@ -102,10 +103,8 @@
 
         unit = {};
 
-        async created() {
-            const id = this.$route.params['id'];
-            const {data} = await rest.getExerciseUnit(id);
-            this.unit = data;
+        created() {
+            this.reset();
         }
 
         dragStart() {
@@ -118,6 +117,21 @@
 
         droppedIntoMiddlePanel(item: any, data: any) {
             console.log(`Dropped into middle panel (item=${item}, data=${data}`);
+        }
+
+        async checkResults() {
+            try {
+                const {data} = await rest.checkResults(this.unit);
+                this.unit = data;
+            } catch(err) {
+                this.$toasted.error('Failed to validate results');
+            }
+        }
+
+        async reset() {
+            const id = this.$route.params['id'];
+            const {data} = await rest.getExerciseUnit(id);
+            this.unit = data;
         }
     }
 </script>
@@ -197,5 +211,9 @@
         border: 1px solid rgb(166, 166, 166);
         padding: 4px;
         min-height: 200px;
+    }
+
+    .correctText {
+        font-size: 12px;
     }
 </style>

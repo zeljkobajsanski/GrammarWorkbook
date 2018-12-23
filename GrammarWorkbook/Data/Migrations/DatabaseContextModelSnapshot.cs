@@ -47,35 +47,17 @@ namespace GrammarWorkbook.Data.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<Guid?>("TopicId");
+                    b.Property<Guid>("TopicId");
+
+                    b.Property<bool>("UseOptions");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Exercise");
+                    b.ToTable("Exercises");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Exercise");
-                });
-
-            modelBuilder.Entity("GrammarWorkbook.Data.Models.Option", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("DialogId");
-
-                    b.Property<Guid?>("FillTheBlanksExerciseId");
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DialogId");
-
-                    b.HasIndex("FillTheBlanksExerciseId");
-
-                    b.ToTable("Option");
                 });
 
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Sentence", b =>
@@ -85,13 +67,15 @@ namespace GrammarWorkbook.Data.Migrations
 
                     b.Property<Guid?>("FillTheBlanksExerciseId");
 
+                    b.Property<bool>("IsFullWidth");
+
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FillTheBlanksExerciseId");
 
-                    b.ToTable("Sentence");
+                    b.ToTable("Sentences");
                 });
 
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Topic", b =>
@@ -103,13 +87,13 @@ namespace GrammarWorkbook.Data.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<Guid?>("UnitId");
+                    b.Property<Guid>("UnitId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Topics");
                 });
 
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Unit", b =>
@@ -160,20 +144,10 @@ namespace GrammarWorkbook.Data.Migrations
 
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Exercise", b =>
                 {
-                    b.HasOne("GrammarWorkbook.Data.Models.Topic")
+                    b.HasOne("GrammarWorkbook.Data.Models.Topic", "Topic")
                         .WithMany("Exercises")
-                        .HasForeignKey("TopicId");
-                });
-
-            modelBuilder.Entity("GrammarWorkbook.Data.Models.Option", b =>
-                {
-                    b.HasOne("GrammarWorkbook.Data.Models.Dialog")
-                        .WithMany("Options")
-                        .HasForeignKey("DialogId");
-
-                    b.HasOne("GrammarWorkbook.Data.Models.FillTheBlanksExercise")
-                        .WithMany("Options")
-                        .HasForeignKey("FillTheBlanksExerciseId");
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Sentence", b =>
@@ -185,9 +159,10 @@ namespace GrammarWorkbook.Data.Migrations
 
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Topic", b =>
                 {
-                    b.HasOne("GrammarWorkbook.Data.Models.Unit")
+                    b.HasOne("GrammarWorkbook.Data.Models.Unit", "Unit")
                         .WithMany("Topics")
-                        .HasForeignKey("UnitId");
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

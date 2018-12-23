@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GrammarWorkbook.Data.Dto;
 using GrammarWorkbook.Data.Models;
 
 namespace GrammarWorkbook.UseCases.Exercises
@@ -7,11 +8,10 @@ namespace GrammarWorkbook.UseCases.Exercises
     {
         public MapperConfiguration()
         {
-            CreateMap<SaveExercise.Input.Option, Data.Models.Option>();
-            CreateMap<SaveExercise.Input.Sentence, Data.Models.Sentence>();
-
-            CreateMap<SaveExercise.Input, FillTheBlanksExercise>();
-            CreateMap<SaveExercise.Input, DialogExercise>();
+            CreateMap<SaveExercise.Input, Exercise>()
+                .IncludeBase<ExerciseDto, Exercise>();
         }
     }
+
+    
 }

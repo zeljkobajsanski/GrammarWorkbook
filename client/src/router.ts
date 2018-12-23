@@ -20,7 +20,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {path: '/exercise/:id', name: 'exercise', component: () => import('./views/Exercise.vue')},
-    {path: '/topic/:id/edit', name: 'topic-edit', component: () => import('./views/TopicEdit.vue')},
-    {path: '/', redirect: '/exercise/1'},
+    {path: '/units/:unitId/topics/:id?', name: 'topic-edit', component: () => import('./views/TopicEdit.vue')},
+    {path: '/', redirect: '/units/2CCB48AD-1627-4349-1717-08D667F7E9FF/topics'},
   ]
 })

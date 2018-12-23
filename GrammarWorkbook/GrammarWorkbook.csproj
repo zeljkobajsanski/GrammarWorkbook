@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>0C08BB4F-C410-49FA-876F-FF13A09C3BD2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Data\ModelMappings" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -14,6 +16,9 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

@@ -31,6 +31,7 @@ namespace GrammarWorkbook
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMediatR();
             services.AddDbContext<DatabaseContext>(cfg => { cfg.UseSqlServer(Configuration.GetConnectionString("Database")); });
+            //services.AddDbContext<DatabaseContext>(cfg => { cfg.UseSqlite("Data source=Database.db"); });
             services.AddAutoMapper();
         }
 

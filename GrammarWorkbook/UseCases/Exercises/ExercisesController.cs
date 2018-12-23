@@ -15,11 +15,18 @@ namespace GrammarWorkbook.UseCases.Exercises
             _mediator = mediator;
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> SaveExercise(SaveExercise.Input input)
+        [HttpPost()]
+        public async Task<IActionResult> SaveExercise([FromBody] SaveExercise.Input input)
         {
             var result = await _mediator.Send(input);
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteExercise([FromRoute] DeleteExercise.Input input)
+        {
+            await _mediator.Send(input);
+            return Ok();
         }
     }
 }

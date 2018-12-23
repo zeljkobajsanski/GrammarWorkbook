@@ -1,0 +1,50 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+#Insert Topic
+POST http://localhost:5000/api/topics
+Content-Type: application/json
+
+{"unitId": "2CCB48AD-1627-4349-1717-08D667F7E9FF", "title": "Vocabulary"}
+
+###
+
+#Update Topic
+POST http://localhost:5000/api/topics
+Content-Type: application/json
+
+{"unitId": "2CCB48AD-1627-4349-1717-08D667F7E9FF", "title": "Grammar", "id": "cc2b5f45-2158-4a2d-d555-08d667f9c151"}
+
+###
+
+# Get Topic by ID
+GET http://localhost:5000/api/topics/BE505B86-B3D6-4A34-9E55-08D667FE364B
+
+###
+
+#Insert Exercise
+POST http://localhost:5000/api/exercises
+Content-Type: application/json
+
+{"topicId": "BE505B86-B3D6-4A34-9E55-08D667FE364B", "title": "Exercise 1", "type": "fill", "useOptions": true, 
+  "sentences": [
+    {"text": "How (are) you?"}
+  ]
+}
+###
+
+#Update Exercise
+POST http://localhost:5000/api/exercises
+Content-Type: application/json
+
+{"topicId": "BE505B86-B3D6-4A34-9E55-08D667FE364B", "id": "EEA948FC-DCB1-4376-AC7D-949F1BE4A669", "title": "Exercise 1", "type": "fill", "useOptions": true, "sentences": []}
+###
+
+
+GET http://localhost:5000/api/units/2CCB48AD-1627-4349-1717-08D667F7E9FF
+Content-Type: application/json
+###
