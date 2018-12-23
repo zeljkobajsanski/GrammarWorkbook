@@ -11,6 +11,7 @@ namespace GrammarWorkbook.UseCases.Units.Dto
         public ICollection<Word> Words { get; set; }
         public bool IsCorrect { get; set; }
         public string CorrectText { get; set; }
+        public string[] Options { get; set; }
 
         public string MakeSentence()
         {

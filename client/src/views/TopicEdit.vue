@@ -24,7 +24,6 @@
                         <div class="col-10">
                             <select class="form-control" v-model="exercise.type">
                                 <option value="fill">Fill the blanks</option>
-                                <option value="dialogue">Dialog</option>
                             </select>
                         </div>
                     </div>
@@ -39,7 +38,10 @@
                         <div class="col-10">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" :id="'useOptions' + ix" v-model="exercise.useOptions">
-                                <label class="custom-control-label" :for="'useOptions' + ix">Use options</label>
+                                <label class="custom-control-label" :for="'useOptions' + ix" style="margin-right: 40px">Use options</label>
+
+                                <input type="checkbox" class="custom-control-input" :id="'useDialog' + ix" v-model="exercise.isDialog">
+                                <label class="custom-control-label" :for="'useDialog' + ix">as dialog</label>
                             </div>
                         </div>
                     </div>
@@ -51,14 +53,8 @@
                     </div>
                     <div class="form-group row" v-for="(sentence, sentenceIndex) in exercise.sentences">
                         <label class="col-2 col-form-label">Sentence</label>
-                        <div class="col-7">
+                        <div class="col-9">
                             <input class="form-control" v-model="sentence.text">
-                        </div>
-                        <div class="col-2">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" :id="`useFullWidth_${ix}_${sentenceIndex}`" v-model="sentence.isFullWidth">
-                                <label class="custom-control-label" :for="`useFullWidth_${ix}_${sentenceIndex}`">Full width</label>
-                            </div>
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-sm btn-danger" @click="removeSentence(exercise, sentence)">Remove</button>
@@ -112,7 +108,7 @@
 
         async saveExercise(exercise) {
             try {
-                const {data} = RestClient.saveExercise(exercise);
+                const {data} = await RestClient.saveExercise(exercise);
                 const ix = this.topic.exercises.indexOf(exercise);
                 this.topic[ix] = data;
                 this.$toasted.success('Exercise has been saved', {icon: 'check'});

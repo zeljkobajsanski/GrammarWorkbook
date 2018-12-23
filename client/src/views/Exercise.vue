@@ -10,20 +10,23 @@
         <b-card :title="(ix + 1) + '. ' + topic.title" :sub-title="'| ' + topic.subTitle"
                 v-for="(topic, ix) in unit.topics" class="mb-4 topic">
             <div class="clearfix"></div>
-            <b-card :sub-title="exercise.title" v-for="exercise in topic.exercises" class="md-12"
+            <b-card :sub-title="`${exerciseIndex + 1}. ${exercise.title}`" v-for="(exercise, exerciseIndex) in topic.exercises" class="md-12"
                     style="margin: 4px 0">
                 <div v-if="exercise.type === 'fill'">
                     <ul class="options">
                         <li v-for="option in exercise.options">{{option}}</li>
                     </ul>
                     <ol>
-                        <li v-for="sentence in exercise.sentences">
+                        <li v-for="sentence in exercise.sentences" :class="{dialogue: exercise.isDialog}">
                             <span v-for="word in sentence.words">
                                 <span v-if="!word.isBlank" class="token">{{word.text}}</span>
-                                <input v-if="word.isBlank && !exercise.options.length" type="text" class="token"
+                                <input v-if="word.isBlank && !exercise.options.length && word.options.length === 0" type="text" class="token"
                                        :class="{'wide-textbox': word.isFullSentence, 'short-textbox': !word.isFullSentence}"
                                        v-model="word.text">
-                                <select v-if="word.isBlank && exercise.options.length" v-model="word.text">
+                                <select v-if="word.isBlank && word.options.length " v-model="word.text">
+                                    <option v-for="w in word.options">{{w}}</option>
+                                </select>
+                                <select v-if="word.isBlank && exercise.options.length && word.options.length === 0" v-model="word.text">
                                     <option v-for="option in exercise.options" :value="option">{{option}}</option>
                                 </select>
                             </span>
@@ -215,5 +218,9 @@
 
     .correctText {
         font-size: 12px;
+    }
+
+    li.dialogue {
+        list-style: none;
     }
 </style>

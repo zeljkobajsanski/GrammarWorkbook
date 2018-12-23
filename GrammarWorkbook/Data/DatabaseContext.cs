@@ -21,8 +21,7 @@ namespace GrammarWorkbook.Data
             modelBuilder.Entity<Exercise>()
                 .HasDiscriminator<string>("Discriminator")
                 .HasValue<FillTheBlanksExercise>("fill")
-                .HasValue<MatchTheWordsExercise>("match")
-                .HasValue<DialogExercise>("dialogue");
+                .HasValue<MatchTheWordsExercise>("match");
         }
     }
 }

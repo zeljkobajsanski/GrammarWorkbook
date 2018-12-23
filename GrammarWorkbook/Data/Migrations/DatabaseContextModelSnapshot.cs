@@ -19,24 +19,6 @@ namespace GrammarWorkbook.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GrammarWorkbook.Data.Models.Dialog", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("DialogExerciseId");
-
-                    b.Property<Guid?>("SentenceId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DialogExerciseId");
-
-                    b.HasIndex("SentenceId");
-
-                    b.ToTable("Dialog");
-                });
-
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Exercise", b =>
                 {
                     b.Property<Guid>("Id")
@@ -66,8 +48,6 @@ namespace GrammarWorkbook.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<Guid?>("FillTheBlanksExerciseId");
-
-                    b.Property<bool>("IsFullWidth");
 
                     b.Property<string>("Text");
 
@@ -110,16 +90,11 @@ namespace GrammarWorkbook.Data.Migrations
                     b.ToTable("Units");
                 });
 
-            modelBuilder.Entity("GrammarWorkbook.Data.Models.DialogExercise", b =>
-                {
-                    b.HasBaseType("GrammarWorkbook.Data.Models.Exercise");
-
-                    b.HasDiscriminator().HasValue("dialogue");
-                });
-
             modelBuilder.Entity("GrammarWorkbook.Data.Models.FillTheBlanksExercise", b =>
                 {
                     b.HasBaseType("GrammarWorkbook.Data.Models.Exercise");
+
+                    b.Property<bool>("IsDialog");
 
                     b.HasDiscriminator().HasValue("fill");
                 });
@@ -129,17 +104,6 @@ namespace GrammarWorkbook.Data.Migrations
                     b.HasBaseType("GrammarWorkbook.Data.Models.Exercise");
 
                     b.HasDiscriminator().HasValue("match");
-                });
-
-            modelBuilder.Entity("GrammarWorkbook.Data.Models.Dialog", b =>
-                {
-                    b.HasOne("GrammarWorkbook.Data.Models.DialogExercise")
-                        .WithMany("Dialogs")
-                        .HasForeignKey("DialogExerciseId");
-
-                    b.HasOne("GrammarWorkbook.Data.Models.Sentence", "Sentence")
-                        .WithMany()
-                        .HasForeignKey("SentenceId");
                 });
 
             modelBuilder.Entity("GrammarWorkbook.Data.Models.Exercise", b =>

@@ -58,8 +58,8 @@ namespace GrammarWorkbook.UseCases.Units
         {
             var words = source.TokenizeWords().Select(x =>
             {
-                if (x == "_") return new Dto.Word {IsBlank = true, IsFullSentence = source.IsFullWidth};
-                return new Dto.Word {Text = x, IsFullSentence = source.IsFullWidth};
+                if (x.Text == "_") return new Dto.Word {IsBlank = true, Options = x.Options.Shuffle()};
+                return new Dto.Word {Text = x.Text, Options = new string[0]};
             });
 
             return words.ToList();

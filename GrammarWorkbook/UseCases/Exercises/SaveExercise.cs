@@ -47,18 +47,6 @@ namespace GrammarWorkbook.UseCases.Exercises
                 }
                 
                 Mapper.Map(request, exercise);
-
-                /*if (exercise is FillTheBlanksExercise)
-                {
-                    var fillTheBlanksExercise = (FillTheBlanksExercise) exercise;
-                    foreach (var sentence in fillTheBlanksExercise.Sentences)
-                    {
-                        if (sentence.Id == Guid.Empty)
-                        {
-                            
-                        }
-                    }
-                }*/
                 
                 await Context.SaveChangesAsync(cancellationToken);
                 return Mapper.Map<ExerciseDto>(exercise);

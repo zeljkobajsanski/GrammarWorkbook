@@ -13,6 +13,7 @@ namespace GrammarWorkbook.Data.Models
 
     public class FillTheBlanksExercise : Exercise
     {
+        public bool IsDialog { get; set; }
         public ICollection<Sentence> Sentences { get; private set; }
 
         public FillTheBlanksExercise()
@@ -21,14 +22,5 @@ namespace GrammarWorkbook.Data.Models
         }
     }
 
-    public class DialogExercise : Exercise
-    {
-        public ICollection<Dialog> Dialogs { get; private set; }
-
-        public DialogExercise()
-        {
-            Dialogs = new List<Dialog>();
-        }
-    }
     public class MatchTheWordsExercise : Exercise { }
 }

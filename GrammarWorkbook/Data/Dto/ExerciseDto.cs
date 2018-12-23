@@ -10,6 +10,7 @@ namespace GrammarWorkbook.Data.Dto
         public Guid TopicId { get; set; }
         public string Type { get; set; }
         public bool UseOptions { get; set; }
+        public bool IsDialog { get; set; }
         public ICollection<SentenceDto> Sentences { get; set; }
     }
 }
