@@ -4,5 +4,6 @@ namespace GrammarWorkbook.Data.Models
     {
         public string Text { get; set; }
         public string[] Options { get; set; }
+        public string CorrectOption { get; set; }
     }
 }

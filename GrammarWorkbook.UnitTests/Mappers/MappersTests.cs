@@ -1,25 +1,14 @@
 using System.Linq;
 using AutoMapper;
-using GrammarWorkbook.Data.Dto;
 using GrammarWorkbook.Data.Models;
-using GrammarWorkbook.UseCases.Units;
+using GrammarWorkbook.UnitTests.Utils;
 using Xunit;
 
 namespace GrammarWorkbook.UnitTests.Mappers
 {
     public class MappersTests
     {
-        private IMapper _mapper;
-
-        public MappersTests()
-        {
-            var mappingCfg = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<MapperProfile>();
-                cfg.AddProfile<MappingProfile>();
-            });
-            _mapper = new Mapper(mappingCfg);
-        }
+        private IMapper _mapper = MapperFactory.GetMapper();
 
         [Fact]
         public void SentenceToDto()

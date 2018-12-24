@@ -31,8 +31,9 @@ namespace GrammarWorkbook.UseCases.Units
                 {
                     var s = await Context.Sentences.SingleAsync(x => x.Id == sentence.Id, cancellationToken);
                     var createdSentence = sentence.MakeSentence();
-                    sentence.IsCorrect = s.Text == createdSentence;
-                    sentence.CorrectText = s.Text;
+                    var correctAnswer = s.GetCorrectAnswer();
+                    sentence.IsCorrect = correctAnswer == createdSentence;
+                    sentence.CorrectText = correctAnswer;
                 }
 
                 return request.Unit;

@@ -23,14 +23,7 @@ namespace GrammarWorkbook.UnitTests.UseCases.Exercises
         public SaveExerciseTests()
         {
             _database = DatabaseFactory.Get();
-            var mapperConfig = new MapperConfiguration((configure) =>
-            {
-                
-                configure.AddProfile(new MappingProfile());
-                configure.AddProfile(new MapperProfile());
-            });
-            var mapper = new Mapper(mapperConfig);
-            _handler = new SaveExercise.Handler(_database, mapper);
+            _handler = new SaveExercise.Handler(_database, MapperFactory.GetMapper());
         }
         
         [Fact]

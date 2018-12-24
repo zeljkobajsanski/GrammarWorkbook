@@ -69,6 +69,10 @@ namespace GrammarWorkbook.UnitTests.Data.Models
             {
                 Assert.Equal(words[i], tokens.ElementAt(i).Text);
                 Assert.Empty(tokens.ElementAt(i).Options);
+                if (i == 1)
+                {
+                    Assert.Equal("you", tokens.ElementAt(i).CorrectOption);
+                }
             }
         }
         
@@ -84,6 +88,14 @@ namespace GrammarWorkbook.UnitTests.Data.Models
             {
                 Assert.Equal(words[i], tokens.ElementAt(i).Text);
                 Assert.Empty(tokens.ElementAt(i).Options);
+                if (i == 1)
+                {
+                    Assert.Equal("is", tokens.ElementAt(i).CorrectOption);
+                }
+                if (i == 3)
+                {
+                    Assert.Equal("name", tokens.ElementAt(i).CorrectOption);
+                }
             }
         }
 
@@ -109,6 +121,26 @@ namespace GrammarWorkbook.UnitTests.Data.Models
             Assert.Equal(2, tokens.ElementAt(3).Options.Length);
             Assert.Equal("name", tokens.ElementAt(3).Options[0]);
             Assert.Equal("gender", tokens.ElementAt(3).Options[1]);
+        }
+
+        [Fact]
+        public void GetCorrectAnswer_WithOptions()
+        {
+            var sentence = new Sentence() { Text = "What (is|are,is) your (name|name,gender)?" };
+
+            var actual = sentence.GetCorrectAnswer();
+
+            Assert.Equal("What (is) your (name)?", actual);
+        }
+
+        [Fact]
+        public void GetCorrectAnswer_WithoutOptions()
+        {
+            var sentence = new Sentence() { Text = "What (is) your (name)?" };
+
+            var actual = sentence.GetCorrectAnswer();
+
+            Assert.Equal("What (is) your (name)?", actual);
         }
     }
 }

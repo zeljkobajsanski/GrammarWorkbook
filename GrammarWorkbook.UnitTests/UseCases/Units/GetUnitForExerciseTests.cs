@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
-using AutoMapper;
 using GrammarWorkbook.Data;
-using GrammarWorkbook.Data.Dto;
 using GrammarWorkbook.Data.Models;
 using GrammarWorkbook.UnitTests.Utils;
 using GrammarWorkbook.UseCases.Units;
@@ -19,14 +17,7 @@ namespace GrammarWorkbook.UnitTests.UseCases.Units
         public GetUnitForExerciseTests()
         {
             _database = DatabaseFactory.Get();
-            var mapperConfig = new MapperConfiguration((configure) =>
-            {
-                
-                configure.AddProfile(new MappingProfile());
-                configure.AddProfile(new MapperProfile());
-            });
-            var mapper = new Mapper(mapperConfig);
-            _handler = new GetUnitForExercise.Handler(_database, mapper);
+            _handler = new GetUnitForExercise.Handler(_database, MapperFactory.GetMapper());
         }
 
         [Fact]
